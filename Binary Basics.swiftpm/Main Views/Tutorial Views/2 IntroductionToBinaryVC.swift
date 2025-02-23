@@ -11,7 +11,7 @@ class IntroductionToBinaryVC: BBViewController {
 
     let instructionOne = "Binary consists of only two digits, which are called bits:"
     let numbers = "0 and 1"
-    let instructionTwo = "Binary is the way that computers store and process data. You can think of these as128+64+16+4+2 0 = off and 1 = on. Today we'll learn how to represent numbers in binary."
+    let instructionTwo = "Binary is the way that computers store and process data. You can think of these as 0 = off and 1 = on. Today we'll learn how to represent numbers in binary."
     
     // View Elements
     let instructionOneLabel = UILabel()
@@ -21,10 +21,13 @@ class IntroductionToBinaryVC: BBViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        DispatchQueue.main.async {
+            self.navigationView?.isForwardEnabled = true
+        }
         textStackView.axis = .vertical
         textStackView.alignment = .fill
         textStackView.distribution = .fill
-        textStackView.spacing = 25
+        textStackView.spacing = 10
         textStackView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(textStackView)
         NSLayoutConstraint.activate([
@@ -61,6 +64,10 @@ class IntroductionToBinaryVC: BBViewController {
     
     override func didMove(toParent parent: UIViewController?) {
         super.didMove(toParent: parent)
+        guard parent != nil else { return }
+//        DispatchQueue.main.async {
+//            self.navigationView?.isForwardEnabled = true
+//        }
     }
     
 }

@@ -19,8 +19,9 @@ class WelcomeVC: BBViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationView?.isForwardEnabled = false
-        
+        DispatchQueue.main.async {
+            self.navigationView?.isForwardEnabled = false
+        }
         orientationLabel.text = "Note: this app is best experienced in landscape orientation."
         orientationLabel.numberOfLines = 0
         orientationLabel.font = UIFont.monospacedSystemFont(ofSize: 20, weight: .bold)
@@ -33,31 +34,7 @@ class WelcomeVC: BBViewController {
             orientationLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0)
         ])
         
-        do {
-            let attrString = try NSAttributedString(markdown: welcomeString)
-            let mutableAttrString = NSMutableAttributedString(attributedString: attrString)
-            let fullRange = NSRange(location: 0, length: mutableAttrString.length)
-
-            mutableAttrString.enumerateAttribute(.font, in: fullRange, options: []) { value, range, _ in
-                let newFont: UIFont
-                if let currentFont = value as? UIFont,
-                   currentFont.fontDescriptor.symbolicTraits.contains(.traitBold) {
-                    newFont = UIFont.monospacedSystemFont(ofSize: 30, weight: .black)
-//                    mutableAttrString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: range)
-                } else {
-                    newFont = UIFont.monospacedSystemFont(ofSize: 30, weight: .regular)
-                }
-                mutableAttrString.addAttribute(.font, value: newFont, range: range)
-            }
-            
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.lineSpacing = 10.0
-            mutableAttrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: fullRange)
-            
-            mainTextView.attributedText = mutableAttrString
-        } catch {
-            mainTextView.text = welcomeString
-        }
+        mainTextView.attributedText = createAttributedMarkdownString(welcomeString, size: 30)
         mainTextView.isScrollEnabled = true
         mainTextView.textColor = .label
         mainTextView.backgroundColor = .clear
@@ -167,9 +144,10 @@ class WelcomeVC: BBViewController {
     
     override func didMove(toParent parent: UIViewController?) {
         super.didMove(toParent: parent)
-        DispatchQueue.main.async {
-            self.navigationView?.isForwardEnabled = false
-        }
+//        guard parent == nil else { return }
+//        DispatchQueue.main.async {
+//            self.navigationView?.isForwardEnabled = false
+//        }
     }
     
 }

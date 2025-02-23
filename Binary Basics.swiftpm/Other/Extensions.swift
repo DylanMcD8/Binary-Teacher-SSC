@@ -70,3 +70,16 @@ class BBViewController: UIViewController {
 
 
 
+func decimalToBinary(_ decimal: Int) -> [Int] {
+    var decimal = decimal
+    var binary: [Int] = []
+    
+    while decimal > 0 {
+        binary.insert(decimal % 2, at: 0)
+        decimal /= 2
+    }
+    
+    return binary
+}
+
+    

@@ -78,3 +78,38 @@ class FadingTextView: UITextView, UITextViewDelegate {
         case all
     }
 }
+
+
+func createAttributedMarkdownString(_ string: String, size: CGFloat = 35, lineSpacing: CGFloat = 10) -> NSAttributedString {
+    do {
+        let attributedString = try NSAttributedString(markdown: string, options: AttributedString.MarkdownParsingOptions(
+            allowsExtendedAttributes: false,
+            interpretedSyntax: .inlineOnlyPreservingWhitespace,
+            failurePolicy: .returnPartiallyParsedIfPossible,
+            languageCode: nil
+        ))
+        let mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
+        let fullRange = NSRange(location: 0, length: mutableAttributedString.length)
+        
+        mutableAttributedString.enumerateAttribute(.font, in: fullRange, options: []) { value, range, _ in
+            let newFont: UIFont
+            if let currentFont = value as? UIFont,
+               currentFont.fontDescriptor.symbolicTraits.contains(.traitBold) {
+                newFont = UIFont.monospacedSystemFont(ofSize: size, weight: .black)
+                //                    mutableAttrString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: range)
+            } else {
+                newFont = UIFont.monospacedSystemFont(ofSize: size, weight: .regular)
+            }
+            mutableAttributedString.addAttribute(.font, value: newFont, range: range)
+        }
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = lineSpacing
+        mutableAttributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: fullRange)
+        
+        return mutableAttributedString
+    } catch {
+        return NSAttributedString(string: string)
+    }
+}
+

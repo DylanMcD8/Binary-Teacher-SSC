@@ -48,4 +48,3 @@ func navigationButton(title: String, iconName: String, iconPlacement: NSDirectio
     
     return button
 }
-

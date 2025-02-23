@@ -231,6 +231,8 @@ extension BasicNavigationView {
         titleLabel.textColor = .label
         titleLabel.text = titleString
         titleLabel.minimumScaleFactor = 0.5
+        titleLabel.numberOfLines = 1
+        titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(titleLabel)
         NSLayoutConstraint.activate([
