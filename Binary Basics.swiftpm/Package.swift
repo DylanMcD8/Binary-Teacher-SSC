@@ -16,6 +16,8 @@ let package = Package(
         .iOSApplication(
             name: "Binary Basics",
             targets: ["AppModule"],
+            bundleIdentifier: "com.sunapps.binary-basics",
+            teamIdentifier: "6755LPJ5W2",
             displayVersion: "1.0",
             bundleVersion: "1",
             appIcon: .asset("AppIcon"),
@@ -29,7 +31,8 @@ let package = Package(
                 .landscapeRight,
                 .landscapeLeft,
                 .portraitUpsideDown(.when(deviceFamilies: [.pad]))
-            ]
+            ],
+            appCategory: .education
         )
     ],
     targets: [
