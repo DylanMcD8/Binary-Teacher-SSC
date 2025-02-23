@@ -10,9 +10,11 @@ import UIKit
 
 struct UIKitWrapperView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> BasicNavigationView {
-        let navigationItem1 = NavigationItem(viewController: WelcomeView(), mainTitle: "Welcome!👋", navigationTitle: "Welcome")
-        let navigationItem2 = NavigationItem(viewController: WelcomeView2(), mainTitle: "New Title", navigationTitle: "New Title")
-        return BasicNavigationView(navigationItems: [navigationItem1, navigationItem2, navigationItem1])
+        let welcomeItem = NavigationItem(viewController: WelcomeVC(), mainTitle: "Welcome!👋", navigationTitle: "Welcome")
+        let introToBinaryItem = NavigationItem(viewController: IntroductionToBinaryVC(), mainTitle: "Introduction to Binary", navigationTitle: "Introduction")
+        let toReturn = BasicNavigationView(navigationItems: [welcomeItem, introToBinaryItem])
+        toReturn.overrideUserInterfaceStyle = .dark
+        return toReturn
     }
     
     func updateUIViewController(_ uiViewController: BasicNavigationView, context: Context) {

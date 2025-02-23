@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BinaryBasicsHomeViewController: BBViewController {
+class BinaryBasicsHomeVC: BBViewController {
     
     // Variables
     override func viewDidLoad() {
@@ -19,6 +19,6 @@ class BinaryBasicsHomeViewController: BBViewController {
 }
 
 #Preview {
-    BinaryBasicsHomeViewController()
+    BinaryBasicsHomeVC()
 }
 

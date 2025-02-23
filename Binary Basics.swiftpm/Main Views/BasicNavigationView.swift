@@ -23,6 +23,7 @@ class BasicNavigationView: UIViewController {
     }
     var isForwardEnabled: Bool = true {
         didSet {
+            guard showingForward else { return }
             forwardButton.isUserInteractionEnabled = isForwardEnabled
             UIView.animate(withDuration: 0.3) {
                 self.forwardButton.alpha = self.isForwardEnabled ? 1 : 0.5
@@ -31,12 +32,15 @@ class BasicNavigationView: UIViewController {
     }
     var isBackEnabled: Bool = true {
         didSet {
+            guard showingBack else { return }
             backButton.isUserInteractionEnabled = isBackEnabled
             UIView.animate(withDuration: 0.3) {
                 self.backButton.alpha = self.isBackEnabled ? 1 : 0.5
             }
         }
     }
+    private var showingBack: Bool = false
+    private var showingForward: Bool = false
     
     // Private navigation stack
     private var navigationItems: [NavigationItem] = []
@@ -96,8 +100,7 @@ class BasicNavigationView: UIViewController {
             updateNavigation()
         }
     }
-    
-    // Update the displayed view controller, the title, and the navigation buttons.
+
     private func updateNavigation(animate: Bool = true) {
         let currentItem = navigationItems[currentIndex]
         if animate {
@@ -117,7 +120,9 @@ class BasicNavigationView: UIViewController {
         
         
         if currentIndex > 0 {
-            let prevTitle = navigationItems[currentIndex - 1].navigationTitle
+            var prevTitle = navigationItems[currentIndex - 1].navigationTitle
+            prevTitle = prevTitle == "" ? "Back" : prevTitle
+            showingBack = true
             backButton.setTitle(prevTitle, for: .normal)
             DispatchQueue.main.async { [self] in
                 if backButton.alpha != 1 {
@@ -132,6 +137,7 @@ class BasicNavigationView: UIViewController {
             }
         } else {
 //            backButton.setTitle("Back", for: .normal)
+            showingBack = false
             DispatchQueue.main.async { [self] in
                 if backButton.alpha != 0 {
                     if animate {
@@ -146,7 +152,9 @@ class BasicNavigationView: UIViewController {
         }
         
         if currentIndex < navigationItems.count - 1 {
-            let nextTitle = navigationItems[currentIndex + 1].navigationTitle
+            var nextTitle = navigationItems[currentIndex + 1].navigationTitle
+            nextTitle = nextTitle == "" ? "Next" : nextTitle
+            showingForward = true
             forwardButton.setTitle(nextTitle, for: .normal)
             DispatchQueue.main.async { [self] in
                 if forwardButton.alpha != 1 {
@@ -161,6 +169,7 @@ class BasicNavigationView: UIViewController {
             }
         } else {
 //            forwardButton.setTitle("Forward", for: .normal)
+            showingForward = false
             DispatchQueue.main.async { [self] in
                 if forwardButton.alpha != 0 {
                     if animate {
@@ -182,12 +191,10 @@ class BasicNavigationView: UIViewController {
         newVC.view.translatesAutoresizingMaskIntoConstraints = false
         rootViewContainer.addSubview(newVC.view)
         NSLayoutConstraint.activate([
-            newVC.view.topAnchor.constraint(greaterThanOrEqualTo: rootViewContainer.topAnchor, constant: 0),
-            newVC.view.bottomAnchor.constraint(lessThanOrEqualTo: rootViewContainer.bottomAnchor, constant: 0),
+            newVC.view.topAnchor.constraint(equalTo: rootViewContainer.topAnchor),
+            newVC.view.bottomAnchor.constraint(equalTo: rootViewContainer.bottomAnchor),
             newVC.view.leadingAnchor.constraint(equalTo: rootViewContainer.leadingAnchor),
-            newVC.view.trailingAnchor.constraint(equalTo: rootViewContainer.trailingAnchor),
-            newVC.view.centerXAnchor.constraint(equalTo: rootViewContainer.centerXAnchor),
-            newVC.view.centerYAnchor.constraint(equalTo: rootViewContainer.centerYAnchor)
+            newVC.view.trailingAnchor.constraint(equalTo: rootViewContainer.trailingAnchor)
         ])
         newVC.didMove(toParent: self)
         newVC.view.alpha = 0
@@ -223,6 +230,7 @@ extension BasicNavigationView {
         titleLabel.font = UIFont.monospacedSystemFont(ofSize: 55, weight: .bold)
         titleLabel.textColor = .label
         titleLabel.text = titleString
+        titleLabel.minimumScaleFactor = 0.5
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(titleLabel)
         NSLayoutConstraint.activate([
@@ -242,7 +250,7 @@ extension BasicNavigationView {
         ])
         
         // Forward Button
-        forwardButton = navigationButton(title: "Forward", iconName: "chevron.forward", iconPlacement: .trailing, action: UIAction { _ in
+        forwardButton = navigationButton(title: "Next", iconName: "chevron.forward", iconPlacement: .trailing, action: UIAction { _ in
             self.goForward()
         })
         forwardButton.translatesAutoresizingMaskIntoConstraints = false

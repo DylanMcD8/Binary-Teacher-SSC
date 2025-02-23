@@ -1,5 +1,5 @@
 //
-//  WelcomeView.swift
+//  WelcomeViewController.swift
 //  Binary Basics
 //
 //  Created by Dylan McDonald on 2/22/25.
@@ -7,19 +7,32 @@
 
 import UIKit
 
-class WelcomeView2: BBViewController {
+class WelcomeVC: BBViewController {
     
-    let titleString = "Welcome! 👋"
-    let welcomeString = "Hey there! :) My name is **Dylan**, and I’m a Software Engineering student at the **Rochester Institute of Technology**. I’m also a lifelong Apple fan! When I first started learning Computer Science in high school, one of the first concepts I encountered was **binary**. However, I found it challenging to grasp at first. Inspired by this experience, I decided to create a project that aims to teach binary in a simple and concise manner. **Welcome to Binary Basics!**"
+    let welcomeString = "Hey there! :)  My name is **Dylan**, and I'm a Software Engineering student at **Rochester Institute of Technology**, and a lifelong Apple fan! When I first started learning Computer Science in high school, one of the first things I learned about was **binary**, but I struggled to understand it at first. So, I wanted to create a project based on that experience that teaches binary in a simple and quick way. **Welcome to Binary Basics!**"
     
     // View Elements
-    let mainLabel = UILabel()
+    let orientationLabel = UILabel()
+    let mainTextView = FadingTextView()
     let chooseColorTitle = UILabel()
     let colorsStackView = UIStackView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationView?.isForwardEnabled = false
+        
+        orientationLabel.text = "Note: this app is best experienced in landscape orientation."
+        orientationLabel.numberOfLines = 0
+        orientationLabel.font = UIFont.monospacedSystemFont(ofSize: 20, weight: .bold)
+        orientationLabel.textAlignment = .center
+        orientationLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(orientationLabel)
+        NSLayoutConstraint.activate([
+            orientationLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0),
+            orientationLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0),
+            orientationLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0)
+        ])
+        
         do {
             let attrString = try NSAttributedString(markdown: welcomeString)
             let mutableAttrString = NSMutableAttributedString(attributedString: attrString)
@@ -38,24 +51,32 @@ class WelcomeView2: BBViewController {
             }
             
             let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.lineSpacing = 15.0
+            paragraphStyle.lineSpacing = 10.0
             mutableAttrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: fullRange)
             
-            mainLabel.attributedText = mutableAttrString
+            mainTextView.attributedText = mutableAttrString
         } catch {
-            mainLabel.text = welcomeString
+            mainTextView.text = welcomeString
         }
-        mainLabel.numberOfLines = 0
-        mainLabel.translatesAutoresizingMaskIntoConstraints = false
+        mainTextView.isScrollEnabled = true
+        mainTextView.textColor = .label
+        mainTextView.backgroundColor = .clear
+        mainTextView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        mainTextView.textContainerInset = .zero
+        mainTextView.translatesAutoresizingMaskIntoConstraints = false
+
 //        mainLabel.font = UIFont.monospacedSystemFont(ofSize: 30, weight: .medium)
-        mainLabel.numberOfLines = 0
-        mainLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(mainLabel)
+        self.view.addSubview(mainTextView)
         NSLayoutConstraint.activate([
-            mainLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0),
-            mainLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0),
-            mainLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0)
+            mainTextView.topAnchor.constraint(equalTo: orientationLabel.bottomAnchor, constant: 10),
+            mainTextView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0),
+            mainTextView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0),
         ])
+        
+       
+        
+        
+        
         
         chooseColorTitle.text = "Choose a color to get started:"
         chooseColorTitle.font = UIFont.monospacedSystemFont(ofSize: 25, weight: .semibold)
@@ -63,10 +84,15 @@ class WelcomeView2: BBViewController {
         chooseColorTitle.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(chooseColorTitle)
         NSLayoutConstraint.activate([
-            chooseColorTitle.topAnchor.constraint(greaterThanOrEqualTo: mainLabel.bottomAnchor, constant: 50),
+            mainTextView.bottomAnchor.constraint(equalTo: chooseColorTitle.topAnchor, constant: -30),
             chooseColorTitle.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0),
             chooseColorTitle.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0)
         ])
+        
+        
+        
+        
+        
         
         colorsStackView.axis = .horizontal
         colorsStackView.distribution = .fillEqually
@@ -82,6 +108,10 @@ class WelcomeView2: BBViewController {
             colorsStackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
         ])
         
+        
+        
+        
+        
         let colors: [AppleColors] = [.green, .yellow, .orange, .red, .purple, .blue]
         var buttons: [UIButton] = []
         for color in colors {
@@ -93,7 +123,7 @@ class WelcomeView2: BBViewController {
             button.widthAnchor.constraint(equalToConstant: 50).isActive = true
             button.layer.cornerRadius = 50 / 2
             button.translatesAutoresizingMaskIntoConstraints = false
-            button.layer.borderColor = UIColor.label.withAlphaComponent(0.3).cgColor
+            button.layer.borderColor = UIColor.white.withAlphaComponent(0.3).cgColor
             let isCurrentColor = UserSettings.accentColor == color
             button.layer.borderWidth = isCurrentColor ? 26 : 3
             button.tag = colors.firstIndex(of: color) ?? 0
@@ -130,6 +160,9 @@ class WelcomeView2: BBViewController {
             }
             
         }
+        
+        
+        
     }
     
     override func didMove(toParent parent: UIViewController?) {
