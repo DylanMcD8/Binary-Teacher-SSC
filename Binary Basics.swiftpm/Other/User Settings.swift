@@ -11,10 +11,10 @@ import UIKit
 class UserSettings {
     static var accentColor: AppleColors {
         get {
-            return AppleColors(rawValue: UserDefaults.standard.string(forKey: "App Accent Color") ?? "Gray") ?? .gray
+            return AppleColors(rawValue: UserDefaults.standard.string(forKey: "AccentColor") ?? "Gray") ?? .gray
         }
         set {
-            UserDefaults.standard.setValue(newValue.rawValue, forKey: "App Accent Color")
+            UserDefaults.standard.setValue(newValue.rawValue, forKey: "AccentColor")
         }
     }
 }

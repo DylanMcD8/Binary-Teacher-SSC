@@ -7,10 +7,10 @@
 
 import UIKit
 
-class WelcomeView: BBViewController {
+class WelcomeView2: BBViewController {
     
     let titleString = "Welcome! 👋"
-    let welcomeString = "Hey there! :)  My name is **Dylan**, and I'm a Software Engineering student at **Rochester Institute of Technology**, and a lifelong Apple fan! When I first started learning Computer Science in high school, one of the first things I learned about was **binary**, but I struggled to understand it at first. So, I wanted to create a project based on that experience that teaches binary in a simple and quick way. **Welcome to Binary Basics!**"
+    let welcomeString = "Hey there! :) My name is **Dylan**, and I’m a Software Engineering student at the **Rochester Institute of Technology**. I’m also a lifelong Apple fan! When I first started learning Computer Science in high school, one of the first concepts I encountered was **binary**. However, I found it challenging to grasp at first. Inspired by this experience, I decided to create a project that aims to teach binary in a simple and concise manner. **Welcome to Binary Basics!**"
     
     // View Elements
     let mainLabel = UILabel()

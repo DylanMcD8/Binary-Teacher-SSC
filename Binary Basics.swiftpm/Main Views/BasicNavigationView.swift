@@ -100,21 +100,47 @@ class BasicNavigationView: UIViewController {
     // Update the displayed view controller, the title, and the navigation buttons.
     private func updateNavigation(animate: Bool = true) {
         let currentItem = navigationItems[currentIndex]
-        titleString = currentItem.mainTitle
+        if animate {
+            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
+                self.titleLabel.alpha = 0
+                self.titleLabel.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+            }, completion: { _ in
+                self.titleString = currentItem.mainTitle
+                UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut) {
+                    self.titleLabel.transform = .identity
+                    self.titleLabel.alpha = 1
+                }
+            })
+        } else {
+            titleString = currentItem.mainTitle
+        }
+        
         
         if currentIndex > 0 {
             let prevTitle = navigationItems[currentIndex - 1].navigationTitle
             backButton.setTitle(prevTitle, for: .normal)
-            if backButton.alpha != 1 {
-                UIView.animate(withDuration: 0.3) {
-                    self.backButton.alpha = 1
+            DispatchQueue.main.async { [self] in
+                if backButton.alpha != 1 {
+                    if animate {
+                        UIView.animate(withDuration: 0.3) {
+                            self.backButton.alpha = 1
+                        }
+                    } else {
+                        backButton.alpha = 1
+                    }
                 }
             }
         } else {
-            backButton.setTitle("Back", for: .normal)
-            if backButton.alpha != 0 {
-                UIView.animate(withDuration: 0.3) {
-                    self.backButton.alpha = 0
+//            backButton.setTitle("Back", for: .normal)
+            DispatchQueue.main.async { [self] in
+                if backButton.alpha != 0 {
+                    if animate {
+                        UIView.animate(withDuration: 0.3) {
+                            self.backButton.alpha = 0
+                        }
+                    } else {
+                        backButton.alpha = 0
+                    }
                 }
             }
         }
@@ -122,16 +148,28 @@ class BasicNavigationView: UIViewController {
         if currentIndex < navigationItems.count - 1 {
             let nextTitle = navigationItems[currentIndex + 1].navigationTitle
             forwardButton.setTitle(nextTitle, for: .normal)
-            if forwardButton.alpha != 1 {
-                UIView.animate(withDuration: 0.3) {
-                    self.forwardButton.alpha = 1
+            DispatchQueue.main.async { [self] in
+                if forwardButton.alpha != 1 {
+                    if animate {
+                        UIView.animate(withDuration: 0.3) {
+                            self.forwardButton.alpha = 1
+                        }
+                    } else {
+                        forwardButton.alpha = 1
+                    }
                 }
             }
         } else {
-            forwardButton.setTitle("Forward", for: .normal)
-            if forwardButton.alpha != 0 {
-                UIView.animate(withDuration: 0.3) {
-                    self.forwardButton.alpha = 0
+//            forwardButton.setTitle("Forward", for: .normal)
+            DispatchQueue.main.async { [self] in
+                if forwardButton.alpha != 0 {
+                    if animate {
+                        UIView.animate(withDuration: 0.3) {
+                            self.forwardButton.alpha = 0
+                        }
+                    } else {
+                        forwardButton.alpha = 0
+                    }
                 }
             }
         }
@@ -152,19 +190,26 @@ class BasicNavigationView: UIViewController {
             newVC.view.centerYAnchor.constraint(equalTo: rootViewContainer.centerYAnchor)
         ])
         newVC.didMove(toParent: self)
-        
+        newVC.view.alpha = 0
         
         if animate, let oldVC = oldVC {
-            newVC.view.alpha = 0
-            UIView.animate(withDuration: 0.3, animations: {
+            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: {
+                self.rootViewContainer.alpha = 0
                 oldVC.view.alpha = 0
-                newVC.view.alpha = 1
+                self.rootViewContainer.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
             }, completion: { _ in
-                oldVC.willMove(toParent: nil)
-                oldVC.view.removeFromSuperview()
-                oldVC.removeFromParent()
+                UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
+                    self.rootViewContainer.alpha = 1
+                    newVC.view.alpha = 1
+                    self.rootViewContainer.transform = .identity
+                }, completion: { _ in
+                    oldVC.willMove(toParent: nil)
+                    oldVC.view.removeFromSuperview()
+                    oldVC.removeFromParent()
+                })
             })
         } else {
+            newVC.view.alpha = 1
             oldVC?.willMove(toParent: nil)
             oldVC?.view.removeFromSuperview()
             oldVC?.removeFromParent()
