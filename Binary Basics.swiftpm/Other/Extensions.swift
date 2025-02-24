@@ -25,19 +25,19 @@ fileprivate func getSavedColor() -> UIColor {
 func convertAppleColorToUIColor(_ color: AppleColors) -> UIColor {
     switch color {
         case .blue:
-            return UIColor(resource: .appleBlue)
+        return .appleBlue
         case .green:
-            return UIColor(resource: .appleGreen)
+        return .appleGreen
         case .red:
-            return UIColor(resource: .appleRed)
+        return .appleRed
         case .yellow:
-            return UIColor(resource: .appleYellow)
+        return .appleYellow
         case .orange:
-            return UIColor(resource: .appleOrange)
+        return .appleOrange
         case .purple:
-            return UIColor(resource: .applePurple)
+        return .applePurple
         case .gray:
-            return UIColor(resource: .appleGray)
+        return .appleGray
     }
 }
 
@@ -95,26 +95,26 @@ func binaryToDecimal(_ binary: [Int]) -> Int {
 }
     
 extension UIColor {
-    // Apple Colors
+    // Apple colors
     static var appleGray: UIColor {
-        return UIColor(red: 161, green: 160, blue: 161, alpha: 1)
+        return UIColor(red: 161/255, green: 160/255, blue: 161/255, alpha: 1)
     }
     static var appleBlue: UIColor {
-        return UIColor(red: 51, green: 111, blue: 198, alpha: 1)
+        return UIColor(red: 51/255, green: 111/255, blue: 198/255, alpha: 1)
     }
     static var appleGreen: UIColor {
-        return UIColor(red: 79, green: 155, blue: 148, alpha: 1)
+        return UIColor(red: 79/255, green: 155/255, blue: 148/255, alpha: 1)
     }
     static var appleOrange: UIColor {
-        return UIColor(red: 238, green: 113, blue: 79, alpha: 1)
+        return UIColor(red: 238/255, green: 113/255, blue: 79/255, alpha: 1)
     }
     static var appleYellow: UIColor {
-        return UIColor(red: 242, green: 165, blue: 59, alpha: 1)
+        return UIColor(red: 242/255, green: 165/255, blue: 59/255, alpha: 1)
     }
     static var appleRed: UIColor {
-        return UIColor(red: 192, green: 67, blue: 64, alpha: 1)
+        return UIColor(red: 192/255, green: 67/255, blue: 64/255, alpha: 1)
     }
     static var applePurple: UIColor {
-        return UIColor(red: 92, green: 69, blue: 191, alpha: 1)
+        return UIColor(red: 92/255, green: 69/255, blue: 191/255, alpha: 1)
     }
 }
