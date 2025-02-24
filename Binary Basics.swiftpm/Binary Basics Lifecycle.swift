@@ -8,7 +8,7 @@
 import SwiftUI
 import UIKit
 
-struct UIKitWrapperView: UIViewControllerRepresentable {
+struct NavigationViewWrapper: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> BasicNavigationView {
         let navigationItems: [NavigationItem] = [
             NavigationItem(viewController: WelcomeVC(), mainTitle: "Welcome!👋", navigationTitle: "Welcome"),
@@ -19,7 +19,7 @@ struct UIKitWrapperView: UIViewControllerRepresentable {
             NavigationItem(viewController: BitValuesVC(), mainTitle: "Binary and Base-2: Bit Values", navigationTitle: "Bit Values"),
             NavigationItem(viewController: OnOrOffVC(), mainTitle: "Binary and Base-2: On or Off?", navigationTitle: "On or Off"),
             NavigationItem(viewController: AddingItAllUpVC(), mainTitle: "Binary and Base-2: Adding it All Up", navigationTitle: "Adding it All Up"),
-            NavigationItem(viewController: ConversionTesterVC(), mainTitle: "Congratulations!", navigationTitle: ""),
+            NavigationItem(viewController: ConversionTesterVC(presentingFromTutorial: true), mainTitle: "Congratulations!", navigationTitle: ""),
         ]
             
         let toReturn = BasicNavigationView(navigationItems: navigationItems)
@@ -32,11 +32,21 @@ struct UIKitWrapperView: UIViewControllerRepresentable {
     }
 }
 
+struct HomeViewWrapper: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> BinaryBasicsHomeVC {
+        return BinaryBasicsHomeVC()
+    }
+    
+    func updateUIViewController(_ uiViewController: BinaryBasicsHomeVC, context: Context) {
+        
+    }
+}
+
 @main
 struct BinaryBasics: App {
     var body: some Scene {
         WindowGroup {
-            UIKitWrapperView()
+            HomeViewWrapper()
                 .preferredColorScheme(.dark)
                 .ignoresSafeArea()
         }

@@ -8,8 +8,10 @@
 import UIKit
 
 class ConversionTesterVC: BBViewController, BinaryNumberHostViewController {
+    
+    var presentingFromTutorial: Bool = true
 
-    let instructionText = "You've learned the basics of binary! Before we do an exercise to test your knowledge, you can experiment with creating different binary numbers on this page. Just tap each bit to toggle it between **0** and **1**. When you're ready, tap **Exercise** below to move on."
+    var instructionText = ""
     var currentDecimal: Int = 0
     var currentBinary: [Int] = [0, 0, 0, 0, 0, 0, 0, 0]
     
@@ -18,6 +20,16 @@ class ConversionTesterVC: BBViewController, BinaryNumberHostViewController {
     let numbersStackView = UIStackView()
     var numberViews: [BinaryNumberView] = []
     let decimalLabel = UILabel()
+    
+    init(presentingFromTutorial: Bool) {
+        super.init(nibName: nil, bundle: nil)
+        self.presentingFromTutorial = presentingFromTutorial
+        instructionText = (presentingFromTutorial ? "You've learned the basics of binary! " : "") + "On this page, you can experiment with creating different binary numbers on this page to test your knowledge of binary to decimal conversion. Try creating different numbers and see how they convert to decimal! Just tap each bit to toggle it between **0** and **1**. Tap the Close button when you're done."
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,6 +89,9 @@ class ConversionTesterVC: BBViewController, BinaryNumberHostViewController {
     override func didMove(toParent parent: UIViewController?) {
         super.didMove(toParent: parent)
         guard parent != nil else { return }
+        DispatchQueue.main.async {
+            self.navigationView?.isBackEnabled = true
+        }
     }
     
     func updateBinaryNumber(forIndex index: Int, withValue value: Int) {
