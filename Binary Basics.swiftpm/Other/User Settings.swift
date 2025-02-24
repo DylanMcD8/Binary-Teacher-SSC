@@ -15,6 +15,7 @@ class UserSettings {
         }
         set {
             UserDefaults.standard.setValue(newValue.rawValue, forKey: "AccentColor")
+            NotificationCenter.default.post(name: Notification.Name("Update Theme Color"), object: nil)
         }
     }
 }

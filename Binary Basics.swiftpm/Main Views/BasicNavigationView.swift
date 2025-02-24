@@ -69,12 +69,12 @@ class BasicNavigationView: UIViewController {
     var showCloseButton: Bool = false {
         didSet {
             closeButton.isHidden = !showCloseButton
-            if showCloseButton && closeButton.alpha == 0 {
+            if showCloseButton && closeButton.alpha == 1 {
                 closeButton.alpha = 0
                 UIView.animate(withDuration: 0.3) {
                     self.closeButton.alpha = 1
                 }
-            } else if !showCloseButton && closeButton.alpha == 1 {
+            } else if !showCloseButton && closeButton.alpha == 0 {
                 closeButton.alpha = 1
                 UIView.animate(withDuration: 0.3) {
                     self.closeButton.alpha = 0

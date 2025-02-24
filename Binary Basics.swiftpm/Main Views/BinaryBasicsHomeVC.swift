@@ -53,6 +53,8 @@ class BinaryBasicsHomeVC: UIViewController {
         super.viewDidLoad()
         setupGradientBackground()
         setupView()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateThemeColor(_:)), name: NSNotification.Name(rawValue: "Update Theme Color"), object: nil)
     }
     
     override func viewDidLayoutSubviews() {
@@ -70,6 +72,10 @@ class BinaryBasicsHomeVC: UIViewController {
                 self.tilesStackView.axis = .horizontal
             }
         }
+    }
+    
+    @objc func updateThemeColor(_ notification: Notification) {
+        self.accentColor = .currentColor
     }
     
     // MARK: - Actions

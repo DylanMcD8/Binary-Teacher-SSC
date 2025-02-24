@@ -52,7 +52,7 @@ class HomeTileUIView: UIView, UIPointerInteractionDelegate, UIGestureRecognizerD
         self.layer.cornerCurve = .continuous
         self.translatesAutoresizingMaskIntoConstraints = false
         
-        NotificationCenter.default.addObserver(self, selector: #selector(updateThemeColor(_:)), name: NSNotification.Name(rawValue: "updatethemecolor"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateThemeColor(_:)), name: NSNotification.Name(rawValue: "Update Theme Color"), object: nil)
         
         if addHighlight {
             setupPointerInteraction()
