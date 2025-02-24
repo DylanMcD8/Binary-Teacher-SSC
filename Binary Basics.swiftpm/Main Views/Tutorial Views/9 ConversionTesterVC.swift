@@ -88,9 +88,14 @@ class ConversionTesterVC: BBViewController, BinaryNumberHostViewController {
     
     override func didMove(toParent parent: UIViewController?) {
         super.didMove(toParent: parent)
-        guard parent != nil else { return }
-        DispatchQueue.main.async {
-            self.navigationView?.isBackEnabled = true
+        if parent == nil {
+            DispatchQueue.main.async {
+                self.navigationView?.showCloseButton = false
+            }
+        } else {
+            DispatchQueue.main.async {
+                self.navigationView?.showCloseButton = true
+            }
         }
     }
     

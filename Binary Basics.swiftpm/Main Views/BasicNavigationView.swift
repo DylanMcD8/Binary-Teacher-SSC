@@ -66,7 +66,22 @@ class BasicNavigationView: UIViewController {
     private var closeButton = UIButton()
     
     // Flag for whether the close button should be shown
-    private var showCloseButton: Bool = false
+    var showCloseButton: Bool = false {
+        didSet {
+            closeButton.isHidden = !showCloseButton
+            if showCloseButton && closeButton.alpha == 0 {
+                closeButton.alpha = 0
+                UIView.animate(withDuration: 0.3) {
+                    self.closeButton.alpha = 1
+                }
+            } else if !showCloseButton && closeButton.alpha == 1 {
+                closeButton.alpha = 1
+                UIView.animate(withDuration: 0.3) {
+                    self.closeButton.alpha = 0
+                }
+            }
+        }
+    }
     
     // MARK: - Initializers
     init(navigationItems: [NavigationItem], showCloseButton: Bool = false) {
@@ -278,7 +293,7 @@ extension BasicNavigationView {
         ])
         
         // Close Button
-        closeButton = navigationButton(title: "Close", iconName: "xmark", action: UIAction { _ in
+        closeButton = navigationButton(title: "", iconName: "xmark", action: UIAction { _ in
             self.dismiss(animated: true, completion: nil)
         })
         closeButton.translatesAutoresizingMaskIntoConstraints = false

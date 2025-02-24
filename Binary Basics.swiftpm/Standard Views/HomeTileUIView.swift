@@ -8,7 +8,7 @@
 import UIKit
 
 class HomeTileUIView: UIView, UIPointerInteractionDelegate, UIGestureRecognizerDelegate {
-    private var addHighlight: Bool = true
+    private var addHighlight: Bool = false
     
     private var regularColor: UIColor {
         return .white.withAlphaComponent(0.2)
@@ -24,6 +24,8 @@ class HomeTileUIView: UIView, UIPointerInteractionDelegate, UIGestureRecognizerD
     private var titleString: String = ""
     private var iconImageView = UIImageView()
     private var iconImage: UIImage!
+    private var subtitleLabel = UILabel()
+    private var subtitleString: String = ""
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -35,10 +37,11 @@ class HomeTileUIView: UIView, UIPointerInteractionDelegate, UIGestureRecognizerD
         commonInit()
     }
     
-    init(frame: CGRect = .zero, title: String, icon: UIImage, addHighlight: Bool = true) {
+    init(frame: CGRect = .zero, title: String, icon: UIImage, subtitle: String, addHighlight: Bool = false) {
         self.titleString = title
         self.iconImage = icon
         self.addHighlight = addHighlight
+        self.subtitleString = subtitle
         super.init(frame: frame)
         commonInit()
     }
@@ -89,8 +92,19 @@ class HomeTileUIView: UIView, UIPointerInteractionDelegate, UIGestureRecognizerD
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         stackView.addArrangedSubview(titleLabel)
         
+        if subtitleString != "" {
+            subtitleLabel.font = UIFont.monospacedSystemFont(ofSize: 25, weight: .semibold)
+            subtitleLabel.textAlignment = .center
+            subtitleLabel.numberOfLines = 0
+            subtitleLabel.minimumScaleFactor = 0.5
+            subtitleLabel.adjustsFontSizeToFitWidth = true
+            subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
+            stackView.addArrangedSubview(subtitleLabel)
+        }
+        
         iconImageView.image = iconImage
         titleLabel.text = titleString
+        subtitleLabel.text = subtitleString
         
     }
     

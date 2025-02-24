@@ -28,7 +28,7 @@ class BinaryBasicsHomeVC: UIViewController {
     // Tiles
     private var learnBinaryTile = UIView()
     private var binaryExplorerTile = UIView()
-    private var aboutMeTile = UIView()
+//    private var aboutMeTile = UIView()
     private var tilesStackView = UIStackView()
     
     
@@ -71,6 +71,36 @@ class BinaryBasicsHomeVC: UIViewController {
             }
         }
     }
+    
+    // MARK: - Actions
+    @objc func learnBinaryTapped() {
+        let vc = tutorialViews()
+        vc.preferredTransition = .zoom { context in
+            return self.learnBinaryTile
+        }
+        vc.isModalInPresentation = true
+        vc.modalPresentationStyle = .overFullScreen
+        present(vc, animated: true)
+    }
+    
+    @objc func binaryExplorerTapped() {
+        let vc = ConversionTesterVC(presentingFromTutorial: false)
+        let nav = BasicNavigationView(navigationItems: [NavigationItem(viewController: vc, mainTitle: "Binary Explorer", navigationTitle: "")], showCloseButton: true)
+        nav.preferredTransition = .zoom { context in
+            return self.binaryExplorerTile
+        }
+        nav.modalPresentationStyle = .overFullScreen
+        present(nav, animated: true)
+    }
+    
+//    @objc func aboutMeTapped() {
+////        let vc = AboutMeVC()
+////        vc.preferredTransition = .zoom { context in
+////            return self.aboutMeTile
+////        }
+////        vc.modalPresentationStyle = .overFullScreen
+////        present(vc, animated: true)
+//    }
 
 }
 
@@ -112,13 +142,23 @@ extension BinaryBasicsHomeVC {
         ])
         
         // Tiles
-        learnBinaryTile = HomeTileUIView(title: "Learn Binary", icon: UIImage(resource: .bbIconSVG))
-        binaryExplorerTile = HomeTileUIView(title: "Binary Explorer", icon: UIImage(resource: .bbIconSVG))
-        aboutMeTile = HomeTileUIView(title: "About Me", icon: UIImage(resource: .bbIconSVG))
+        learnBinaryTile = HomeTileUIView(title: "Learn Binary", icon: UIImage(named: "BB Icon SVG") ?? UIImage(systemName: "apple.terminal")!, subtitle: "Start Here!")
+        binaryExplorerTile = HomeTileUIView(title: "Binary Explorer", icon: UIImage(named: "Binary Explorer SVG") ?? UIImage(systemName: "0.square.fill")!, subtitle: "")
+//        aboutMeTile = HomeTileUIView(title: "About Me", icon: UIImage(named: "Wave SVG") ?? UIImage(systemName: "hand.wave")!)
         
         tilesStackView.addArrangedSubview(learnBinaryTile)
         tilesStackView.addArrangedSubview(binaryExplorerTile)
-        tilesStackView.addArrangedSubview(aboutMeTile)
+//        tilesStackView.addArrangedSubview(aboutMeTile)
+        
+        // tap gestures
+        let learnBinaryTap = UITapGestureRecognizer(target: self, action: #selector(learnBinaryTapped))
+        learnBinaryTile.addGestureRecognizer(learnBinaryTap)
+        
+        let binaryExplorerTap = UITapGestureRecognizer(target: self, action: #selector(binaryExplorerTapped))
+        binaryExplorerTile.addGestureRecognizer(binaryExplorerTap)
+        
+//        let aboutMeTap = UITapGestureRecognizer(target: self, action: #selector(aboutMeTapped))
+//        aboutMeTile.addGestureRecognizer(aboutMeTap)
         
         
         
@@ -129,7 +169,7 @@ extension BinaryBasicsHomeVC {
         colorsStackView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(colorsStackView)
         NSLayoutConstraint.activate([
-            colorsStackView.topAnchor.constraint(equalTo: tilesContainerView.bottomAnchor, constant: 20),
+            colorsStackView.topAnchor.constraint(equalTo: tilesContainerView.bottomAnchor, constant: 25),
             colorsStackView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
             colorsStackView.leadingAnchor.constraint(greaterThanOrEqualTo: self.view.leadingAnchor, constant: 50),
             colorsStackView.trailingAnchor.constraint(lessThanOrEqualTo: self.view.trailingAnchor, constant: -50),
@@ -199,7 +239,7 @@ extension BinaryBasicsHomeVC {
         gradient.colors = [lighterColor.cgColor, darkerColor.cgColor]
         gradient.startPoint = CGPoint(x: 0.0, y: 0.0)
         gradient.endPoint = CGPoint(x: 1.0, y: 1.0)
-        
+        gradient.masksToBounds = false
         view.layer.insertSublayer(gradient, at: 0)
         self.gradientLayer = gradient
     }
