@@ -11,9 +11,10 @@ import UIKit
 struct UIKitWrapperView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> BasicNavigationView {
         let navigationItems: [NavigationItem] = [
-            NavigationItem(viewController: WelcomeVC(), mainTitle: "Welcome!👋", navigationTitle: "Welcome"),
-            NavigationItem(viewController: IntroductionToBinaryVC(), mainTitle: "Introduction to Binary", navigationTitle: "Introduction"),
-            NavigationItem(viewController: DecimalVsBinaryBasesVC(), mainTitle: "Decimal vs. Binary", navigationTitle: "Decimal vs. Binary")
+//            NavigationItem(viewController: WelcomeVC(), mainTitle: "Welcome!👋", navigationTitle: "Welcome"),
+//            NavigationItem(viewController: IntroductionToBinaryVC(), mainTitle: "Introduction to Binary", navigationTitle: "Introduction"),
+//            NavigationItem(viewController: DecimalVsBinaryBasesVC(), mainTitle: "Decimal vs. Binary", navigationTitle: "Decimal vs. Binary"),
+            NavigationItem(viewController: BinaryAndBase2VC(), mainTitle: "Binary and Base-2", navigationTitle: "Binary and Base-2")
         ]
             
         let toReturn = BasicNavigationView(navigationItems: navigationItems)
