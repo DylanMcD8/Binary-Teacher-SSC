@@ -44,21 +44,23 @@ class BinaryNumberView: UIView {
     
     private func updateSubtitle(animated: Bool = true) {
         self.subtitleLabel.text = self.subtitleText
+//        self.subtitleLabel.invalidateIntrinsicContentSize()
+//        self.binaryLabel.invalidateIntrinsicContentSize()
         let animations = {
-            NSLayoutConstraint.deactivate([self.withSubtitleConstraint, self.withoutSubtitleConstraint])
+//            NSLayoutConstraint.deactivate([self.bottomConstraint, self.withoutSubtitleConstraint])
 //            self.invalidateIntrinsicContentSize()
 //            self.subtitleLabel.invalidateIntrinsicContentSize()
+//            self.binaryLabel.invalidateIntrinsicContentSize()
 //            self.setNeedsLayout()
 //            self.layoutIfNeeded()
             if self.subtitleText.isEmpty {
                 self.subtitleLabel.alpha = 0
-                self.withoutSubtitleConstraint.isActive = true
+                self.bottomConstraint.constant = -10
             } else {
                 self.subtitleLabel.alpha = 1
-                self.withSubtitleConstraint.isActive = true
+                self.bottomConstraint.constant = -(10 + 24.75 + 5)
             }
-            self.invalidateIntrinsicContentSize()
-            self.subtitleLabel.invalidateIntrinsicContentSize()
+//            self.invalidateIntrinsicContentSize()
             self.binaryLabel.invalidateIntrinsicContentSize()
             self.setNeedsLayout()
             self.layoutIfNeeded()
@@ -92,8 +94,8 @@ class BinaryNumberView: UIView {
         return label
     }()
     
-    var withSubtitleConstraint: NSLayoutConstraint!
-    var withoutSubtitleConstraint: NSLayoutConstraint!
+    var bottomConstraint: NSLayoutConstraint!
+//    var withoutSubtitleConstraint: NSLayoutConstraint!
     
     init(value: BinaryValue, subtitleText: String) {
         self.subtitleText = subtitleText
@@ -123,14 +125,15 @@ class BinaryNumberView: UIView {
             self.subtitleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10)
         ])
         
-        self.withSubtitleConstraint = self.binaryLabel.bottomAnchor.constraint(equalTo: self.subtitleLabel.topAnchor, constant: -5)
-        self.withoutSubtitleConstraint = self.binaryLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)
+        self.bottomConstraint = self.binaryLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)
+        bottomConstraint.isActive = true
+//        self.withoutSubtitleConstraint = self.binaryLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)
         
         if subtitleText.isEmpty {
-            self.withoutSubtitleConstraint.isActive = true
+//            self.withoutSubtitleConstraint.isActive = true
             self.subtitleLabel.alpha = 0
         } else {
-            self.withSubtitleConstraint.isActive = true
+//            self.bottomConstraint.isActive = true
             self.subtitleLabel.alpha = 1
         }
         

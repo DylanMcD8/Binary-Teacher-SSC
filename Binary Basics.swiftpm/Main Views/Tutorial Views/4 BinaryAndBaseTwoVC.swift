@@ -69,10 +69,17 @@ class BinaryAndBase2VC: BBViewController {
         }
         
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             print("Changing subtitle text")
             for view in self.numberViews {
                 view.subtitleText = "00"
+            }
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+            print("Changing subtitle text")
+            for view in self.numberViews {
+                view.subtitleText = ""
             }
         }
 
