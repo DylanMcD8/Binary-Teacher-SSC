@@ -11,4 +11,5 @@
 - Intended experience time: a little under three minutes
 
 You can view a GIF preview below, or watch the full quality video [here](https://www.youtube.com/watch?v=TaPl-5Srlq4).
+
 <img src="/Resources/Videos/BinaryBasicsGIF.gif" height="800">
