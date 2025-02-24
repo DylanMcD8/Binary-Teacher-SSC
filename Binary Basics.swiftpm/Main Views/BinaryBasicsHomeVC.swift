@@ -1,5 +1,5 @@
 //
-//  BinaryBasicsHomeViewController.swift
+//  BinaryBasicsHomeVC.swift
 //  Binary Basics
 //
 //  Dylan McDonald | Swift Student Challenge 2025

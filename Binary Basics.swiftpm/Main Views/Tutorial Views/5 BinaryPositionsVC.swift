@@ -1,5 +1,5 @@
 //
-//  BinaryAndBase2VC.swift
+//  BinaryPositionsVC.swift
 //  Binary Basics
 //
 //  Dylan McDonald | Swift Student Challenge 2025
@@ -7,9 +7,9 @@
 
 import UIKit
 
-class BinaryAndBase2VC: BBViewController {
+class BinaryPositionsVC: BBViewController {
 
-    let instructionText = "Chances are you've seen binary before. For example, here's the number **214** in binary:"
+    let instructionText = "But what do these bits mean? Let's break it down.\n\nLet's say that each bit has a position, starting with **0 on the right:**"
     let binaryExampleNumber: [BinaryValue] = [.one, .one, .zero, .one, .zero, .one, .one, .zero]
     
     // View Elements
@@ -57,15 +57,23 @@ class BinaryAndBase2VC: BBViewController {
             numberView.heightAnchor.constraint(equalTo: numberView.widthAnchor, multiplier: 1.5).isActive = true
             numbersStackView.addArrangedSubview(numberView)
             numberViews.append(numberView)
-            numberView.alpha = 0
+//            numberView.alpha = 0
         }
         
-        var delay: TimeInterval = 0.75
-        for view in numberViews.reversed() {
-            UIView.animate(withDuration: 0.2, delay: delay, options: .curveEaseInOut) {
-                view.alpha = 1
+//        var delay: TimeInterval = 0.75
+//        for view in numberViews.reversed() {
+//            UIView.animate(withDuration: 0.2, delay: delay, options: .curveEaseInOut) {
+//                view.alpha = 1
+//            }
+//            delay += 0.1
+//        }
+//        
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+//            print("Changing subtitle text")
+            for (index, view) in self.numberViews.reversed().enumerated() {
+                view.updateSubtitle("Pos: \(index)")
             }
-            delay += 0.1
         }
 
         

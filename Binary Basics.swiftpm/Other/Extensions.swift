@@ -68,6 +68,10 @@ class BBViewController: UIViewController {
     var navigationView: BasicNavigationView?
 }
 
+protocol BinaryNumberHostViewController: AnyObject {
+    func updateBinaryNumber(forIndex index: Int, withValue value: Int)
+}
+
 
 
 func decimalToBinary(_ decimal: Int) -> [Int] {
@@ -82,4 +86,35 @@ func decimalToBinary(_ decimal: Int) -> [Int] {
     return binary
 }
 
+func binaryToDecimal(_ binary: [Int]) -> Int {
+    var decimal = 0
+    for (index, bit) in binary.reversed().enumerated() {
+        decimal += bit * Int(pow(2, Double(index)))
+    }
+    return decimal
+}
     
+extension UIColor {
+    // Apple Colors
+    static var appleGray: UIColor {
+        return UIColor(red: 161, green: 160, blue: 161, alpha: 1)
+    }
+    static var appleBlue: UIColor {
+        return UIColor(red: 51, green: 111, blue: 198, alpha: 1)
+    }
+    static var appleGreen: UIColor {
+        return UIColor(red: 79, green: 155, blue: 148, alpha: 1)
+    }
+    static var appleOrange: UIColor {
+        return UIColor(red: 238, green: 113, blue: 79, alpha: 1)
+    }
+    static var appleYellow: UIColor {
+        return UIColor(red: 242, green: 165, blue: 59, alpha: 1)
+    }
+    static var appleRed: UIColor {
+        return UIColor(red: 192, green: 67, blue: 64, alpha: 1)
+    }
+    static var applePurple: UIColor {
+        return UIColor(red: 92, green: 69, blue: 191, alpha: 1)
+    }
+}

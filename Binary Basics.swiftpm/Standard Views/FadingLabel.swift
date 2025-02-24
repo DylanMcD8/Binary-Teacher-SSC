@@ -1,8 +1,8 @@
 //
-//  YourLabel.swift
+//  FadingLabel.swift
 //  Binary Basics
 //
-//  Created by Dylan McDonald on 2/23/25.
+//  Dylan McDonald | Swift Student Challenge 2025
 //
 
 import UIKit
@@ -16,8 +16,8 @@ class FadingLabel: UILabel {
         }
         
         set {
-            // Already animating or text is the same
-            if isAnimatingTextChange || newValue == super.text {
+            // Already animating or text is the same or it was never set
+            if isAnimatingTextChange || newValue == super.text || super.text == nil {
                 super.text = newValue
                 return
             }

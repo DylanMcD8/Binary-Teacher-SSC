@@ -1,8 +1,8 @@
 //
-//  WelcomeView.swift
+//  IntroductionToBinaryVC.swift
 //  Binary Basics
 //
-//  Created by Dylan McDonald on 2/22/25.
+//  Dylan McDonald | Swift Student Challenge 2025
 //
 
 import UIKit
@@ -65,9 +65,6 @@ class IntroductionToBinaryVC: BBViewController {
     override func didMove(toParent parent: UIViewController?) {
         super.didMove(toParent: parent)
         guard parent != nil else { return }
-//        DispatchQueue.main.async {
-//            self.navigationView?.isForwardEnabled = true
-//        }
     }
     
 }

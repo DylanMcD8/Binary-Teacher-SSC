@@ -1,7 +1,13 @@
-import UIKit
-import CoreMotion
+//
+//  BasicNavigationView.swift
+//  Binary Basics
+//
+//  Dylan McDonald | Swift Student Challenge 2025
+//
 
-// A simple container for a view controller and its title.
+import UIKit
+
+
 struct NavigationItem {
     let viewController: BBViewController
     let mainTitle: String
@@ -9,6 +15,10 @@ struct NavigationItem {
 }
 
 class BasicNavigationView: UIViewController {
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .landscape
+    }
     
     // Public Variables
     var accentColor: UIColor = .currentColor {
@@ -41,6 +51,7 @@ class BasicNavigationView: UIViewController {
     }
     private var showingBack: Bool = false
     private var showingForward: Bool = false
+    private var transitionInProgress: Bool = false
     
     // Private navigation stack
     private var navigationItems: [NavigationItem] = []
@@ -102,6 +113,8 @@ class BasicNavigationView: UIViewController {
     }
 
     private func updateNavigation(animate: Bool = true) {
+        guard !transitionInProgress else { return }
+        transitionInProgress = true
         let currentItem = navigationItems[currentIndex]
         if animate {
             UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
@@ -213,6 +226,7 @@ class BasicNavigationView: UIViewController {
                     oldVC.willMove(toParent: nil)
                     oldVC.view.removeFromSuperview()
                     oldVC.removeFromParent()
+                    self.transitionInProgress = false
                 })
             })
         } else {
@@ -220,6 +234,7 @@ class BasicNavigationView: UIViewController {
             oldVC?.willMove(toParent: nil)
             oldVC?.view.removeFromSuperview()
             oldVC?.removeFromParent()
+            transitionInProgress = false
         }
     }
 }

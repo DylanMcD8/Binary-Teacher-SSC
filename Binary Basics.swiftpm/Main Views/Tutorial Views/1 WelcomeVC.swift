@@ -1,8 +1,8 @@
 //
-//  WelcomeViewController.swift
+//  WelcomeVC.swift
 //  Binary Basics
 //
-//  Created by Dylan McDonald on 2/22/25.
+//  Dylan McDonald | Swift Student Challenge 2025
 //
 
 import UIKit
@@ -34,7 +34,7 @@ class WelcomeVC: BBViewController {
             orientationLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0)
         ])
         
-        mainTextView.attributedText = createAttributedMarkdownString(welcomeString, size: 30)
+        mainTextView.attributedText = createAttributedMarkdownString(welcomeString)
         mainTextView.isScrollEnabled = true
         mainTextView.textColor = .label
         mainTextView.backgroundColor = .clear
