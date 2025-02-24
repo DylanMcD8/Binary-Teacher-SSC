@@ -10,4 +10,4 @@
 - Developed in Xcode, but compatible with Swift Playground
 - Intended experience time: a little under three minutes
 
-<img src="/Resources/BinaryBasicsScreenRecordingGraphicWeb.mov" height="800">
+<img src="/Resources/Videos/BinaryBasicsScreenRecordingGraphicWeb.mov" height="800">
